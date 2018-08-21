@@ -1,4 +1,11 @@
-var setQuery = (staffid) => {
+var setQuery = (staffid,col) => {
+  var colskill = (skills) => {
+    str = "";
+    for (col = 0; col < skills.length; col++) {
+      str = str+` ${skills[col].replace(/\s+/g, '')}`;
+    }
+    return str;
+  }
 var query = `
 {
   staff(id: "${staffid}") {
@@ -18,11 +25,7 @@ fragment fullskilltable on Location {
       specialities {
         Speciality
         skills {
-          Material
-          Testing
-          Management
-          Supervision
-          Hand_On
+          `+colskill(col)+`
           From
           To
        }

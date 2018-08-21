@@ -1,4 +1,11 @@
-var setMutation = (newstaff) => {
+var setMutation = (newstaff,col) => {
+  var colskill = (skills) => {
+    str = "";
+    for (col = 0; col < skills.length; col++) {
+      str = str+` ${skills[col].replace(/\s+/g, '')}`;
+    }
+    return str;
+  }
     var mutation = `
     mutation {
         addStaff(input: ${newstaff}) {
@@ -10,7 +17,7 @@ var setMutation = (newstaff) => {
           }
         }
       }
-      
+
       fragment fullskilltable on Location {
         Master {
           id
@@ -20,21 +27,17 @@ var setMutation = (newstaff) => {
           Trade
           specialities {
             Speciality
-            skills {
-              Material
-              Testing
-              Management
-              Supervision
-              Hand_On
+            skills{
+              `+colskill(col)+`
               From
               To
             }
           }
         }
       }
-    
+
     `;
     return mutation;
     }
-    
+
 module.exports = setMutation;

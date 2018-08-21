@@ -1,5 +1,12 @@
 const style = require('../style')
 var setTable = (table) => {
+  var colskill = (skills) => {
+    html = "";
+    for (col = 0; col < skills.length; col++) {
+      html = html+`<th class = "upright">${skills[col]}</th>`;
+    }
+    return html;
+  }
     var html =`
     <!DOCTYPE html>
     <html>
@@ -22,30 +29,26 @@ var setTable = (table) => {
               <th rowspan="2">Locations</th>
               <th rowspan="2">Trades</th>
               <th rowspan="2">Speciality</th>
-              <th colspan="5">Skill</th>
+              <th colspan="${table.row.length}">Skill</th>
               <th colspan="2">Year</th>
             </tr>
             <tr style="background-color:white">
-              <th class = "upright">Material</th>
-              <th class = "upright">Testing</th>
-              <th class = "upright">Management</th>
-              <th class = "upright">Supervision</th>
-              <th class = "upright">Hand On</th>
+              `+colskill(table.col)+`
               <th>From</th>
               <th style="padding: 0 16px">To</th>
             </tr>
-            `+inserttables(table)+`
+            `+inserttables(table.row,table.col)+`
           </table><br>
           <input type="submit" value="Add Staff">
           </form><hr>
-          <a href="../../">Return Home</a> 
+          <a href="../../">Return Home</a>
     </body>
-    </html> 
+    </html>
     `;
-    
+
     /*      //Location
             <tr></tr><tr>
-            <td rowspan="2+1" style="background-color:white">Site</td>  
+            <td rowspan="2+1" style="background-color:white">Site</td>
 
                     //Trades
                     <td rowspan="2" style="background-color:white">Demolition</td>
@@ -63,7 +66,7 @@ var setTable = (table) => {
 
                     //Trades
                     <td rowspan="1" style="background-color:white">Excavation</td>
-    
+
                             <td>Excavation</td>
                             <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
                             </tr><tr>
@@ -72,7 +75,7 @@ var setTable = (table) => {
     */
     return html;
     };
-    var inserttables = (datas) => {
+    var inserttables = (datas,col) => {
         var html = '';
         for (locationdata = 0; locationdata < datas.length; locationdata++) {
             var rowspan = () => {
@@ -85,42 +88,41 @@ var setTable = (table) => {
             html = html + `
             <tr></tr><tr>
             <td rowspan="`+rowspan()+`" style="background-color:white;">${datas[locationdata].Location}</td>`+
-            inserttrades(datas[locationdata].trades,datas[locationdata].Location)+`</tr>`;
+            inserttrades(datas[locationdata].trades,datas[locationdata].Location,col)+`</tr>`;
         }
         return (html);
     };
-    var inserttrades = (datas,L) => {
+    var inserttrades = (datas,L,col) => {
         var html = '';
-        for (tradedata = 0; tradedata < datas.length; tradedata++) { 
+        for (tradedata = 0; tradedata < datas.length; tradedata++) {
             html = html + `
             <td rowspan="${datas[tradedata].specialities.length}" style="background-color:white">${datas[tradedata].Trade}</td>`+
-            insertspecialities(datas[tradedata].specialities,L,datas[tradedata].Trade);
+            insertspecialities(datas[tradedata].specialities,L,datas[tradedata].Trade,col);
         }
         return (html);
     };
-    
-    var insertspecialities = (datas,L,T) => {
+    var colskillbox = (L,T,S,skills) => {
+      html = "";
+      for (col = 0; col < skills.length; col++) {
+        html = html+`
+        <td class="tick">
+        <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][${skills[col]}]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
+        `;
+      }
+      return html;
+    }
+    var insertspecialities = (datas,L,T,col) => {
         var html = '';
-        for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) { 
+        for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) {
             var S = datas[specialitiesdata].Speciality;
             html = html + `
             <td>${S}</td>
-            <td class="tick">
-            <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][Material]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
-            <td class="tick">
-            <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][Testing]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
-            <td class="tick">
-            <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][Management]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
-            <td class="tick">
-            <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][Supervision]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
-            <td class="tick">
-            <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][Hand_On]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
-            
+            `+colskillbox(L,T,S,col)+`
             <td class="tick"><input type="text" name="skilltable[${L}][${T}][${S}][From]" size="4"></td>
             <td class="tick"><input type="text" name="skilltable[${L}][${T}][${S}][To]" size="4"></td>
-            </tr><tr>`;            
+            </tr><tr>`;
         }
         return (html);
     };
-    
+
     module.exports = setTable;

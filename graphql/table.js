@@ -1,6 +1,7 @@
-var table = 
+var col = ["Material","Testing","Management","Supervision","Hand On"];
+var row =
 [
-    {   
+    {
         Location:"Site Formation",
         trades:[
             {   Trade:"Demolition",
@@ -13,7 +14,7 @@ var table =
                     { Speciality: "Safety Control" },
                     { Speciality: "Environmental Contral" },
                     { Speciality: "Utility Co-ordination" },
-                    ] 
+                    ]
             },{
                 Trade:"Excavation",
                 specialities:[
@@ -26,7 +27,7 @@ var table =
                     { Speciality: "Safety Control" },
                     { Speciality: "Environmental Contral" },
                     { Speciality: "Utility Co-ordination" }
-                ]   
+                ]
             }
         ]
     },{
@@ -38,26 +39,26 @@ var table =
                     { Speciality: "Erect" },
                     { Speciality: "Maintainence" },
                     { Speciality: "Compliance" }
-                    ] 
+                    ]
             },{
                 Trade:"Survey",
                 specialities:[
                     { Speciality: "Boundary Survey" },
                     { Speciality: "Building Verticality" },
                     { Speciality: "Setting Out" }
-                    ]   
+                    ]
             },{
                 Trade:"Safety",
                 specialities:[
                     { Speciality: "Control" },
                     { Speciality: "Compliance" }
-                    ]   
+                    ]
             },{
                 Trade:"Environmental",
                 specialities:[
                     { Speciality: "Control" },
                     { Speciality: "Compliance" }
-                    ]   
+                    ]
             },{
                 Trade:"Contract",
                 specialities:[
@@ -66,31 +67,31 @@ var table =
                     { Speciality: "Subletting" },
                     { Speciality: "Insurance & Bonds" },
                     { Speciality: "Final Accounts" }
-                    ]   
+                    ]
             },{
                 Trade:"Hoarding",
                 specialities:[
                     { Speciality: "Erect & Dismantle" },
                     { Speciality: "Graphic" },
                     { Speciality: "Electrical Lighting" },
-                    ]   
+                    ]
             }
         ]
     },{
         Location:"Substructure",
         trades:[
-            {   
+            {
                 Trade:"Piling",
                 specialities:[
                     { Speciality: "Driven Pile" },
                     { Speciality: "Bored Pile" }
-                    ] 
+                    ]
             }
         ]
     },{
         Location:"Superstucture",
         trades:[
-            {   
+            {
                 Trade:"Concretor",
                 specialities:[
                     { Speciality: "Concrete" },
@@ -99,36 +100,36 @@ var table =
                     { Speciality: "Formwork" },
                     { Speciality: "Precast" },
                     { Speciality: "Prestressed" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Bricklayer",
                 specialities:[
                     { Speciality: "Laying" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Drainlayer",
                 specialities:[
                     { Speciality: " " }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Asphalter",
                 specialities:[
                     { Speciality: " " }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Stone Mason",
                 specialities:[
                     { Speciality: "Structural" },
                     { Speciality: "Cladding" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Roofer",
                 specialities:[
                     { Speciality: "Waterproofing" },
                     { Speciality: "Inulstion" },
                     { Speciality: "Tiling" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Carpenter, Joiner & Ironmonger",
                 specialities:[
                     { Speciality: "Timber Flooring" },
@@ -139,8 +140,8 @@ var table =
                     { Speciality: "Kitchen Cabinets" },
                     { Speciality: "Windows" },
                     { Speciality: "Stuctural" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Steel & Metal",
                 specialities:[
                     { Speciality: "Stuctural" },
@@ -148,8 +149,8 @@ var table =
                     { Speciality: "Windows & Doors" },
                     { Speciality: "Welding" },
                     { Speciality: "Metal Ceiling" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Plasterer",
                 specialities:[
                     { Speciality: "Internal Plastering" },
@@ -158,31 +159,31 @@ var table =
                     { Speciality: "Metal Lathing" },
                     { Speciality: "Mastic Pointing" },
                     { Speciality: "Raise Floor" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Glazier",
                 specialities:[
                     { Speciality: "Sheet Glass" },
                     { Speciality: "Mirror" },
                     { Speciality: "Glass Block" }
-                    ] 
-            },{ 
+                    ]
+            },{
                 Trade:"Painter",
                 specialities:[
                     { Speciality: "Painting" },
                     { Speciality: "Wall Paper" }
-                    ] 
+                    ]
             }
         ]
     },{
         Location:"Specialist",
         trades:[
-            {   
+            {
                 Trade:"Plumber & Drainlayer",
                 specialities:[
                     { Speciality: "Pressure Pipe" }
-                    ] 
-            },{   
+                    ]
+            },{
                 Trade:"Fire Services",
                 specialities:[
                     { Speciality: "Non-pressure Pipe Installation" },
@@ -191,17 +192,18 @@ var table =
                     { Speciality: "Electricity Wiring" },
                     { Speciality: "Design" },
                     { Speciality: "Connection Application" }
-                    ] 
-            },{   
+                    ]
+            },{
                 Trade:"Curtain Walls",
                 specialities:[
                     { Speciality: "Design" },
                     { Speciality: "Production" },
                     { Speciality: "Logistic" },
                     { Speciality: "Installation" }
-                    ] 
+                    ]
             }
         ]
     }
 ]
-module.exports = table;
+module.exports.col = col;
+module.exports.row = row;

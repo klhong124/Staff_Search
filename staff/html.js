@@ -1,7 +1,33 @@
 const style = require('../style')
-var setStaff = (staff) => {
-var skillcount = {Material:0,Testing:0,Management:0, Supervision: 0,Hand_On:0};
-countskill(skillcount,staff.skilltable);
+var skilltoObj = (skills) => {
+  obj = {};
+  for (col = 0; col < skills.length; col++) {
+    obj[`${skills[col]}`] = 0;
+  }
+  return obj;
+}
+var colskill = (skills) => {
+  html = "";
+  for (col = 0; col < skills.length; col++) {
+    html = html+`<th class = "upright">${skills[col]}</th>`;
+  }
+  return html;
+}
+var showscore = (skillcount) => {
+  html = "";
+  for (var skill in skillcount){
+    html = html + `<td class="tick">${skillcount[skill]}</td>`;
+  }
+  return html;
+}
+var totalsocre = (skillcount) => {
+  socre = 0;
+  for (var skill in skillcount){
+    socre = socre + skillcount[skill];
+  }
+  return socre;
+}
+var setStaff = (staff,col) => {
 var html =`
 <!DOCTYPE html>
 <html>
@@ -23,70 +49,31 @@ var html =`
           <th rowspan="2">Locations</th>
           <th rowspan="2">Trades</th>
           <th rowspan="2">Speciality</th>
-          <th colspan="5">Skill</th>
+          <th colspan="${col.length}">Skill</th>
           <th colspan="2">Year</th>
         </tr>
         <tr style="background-color:white">
-          <th class = "upright">Material</th>
-          <th class = "upright">Testing</th>
-          <th class = "upright">Management</th>
-          <th class = "upright">Supervision</th>
-          <th class = "upright">Hand On</th>
+          `+colskill(col)+`
           <th>From</th>
           <th style="padding: 0 16px">To</th>
         </tr>
-        
-        `+inserttables(staff.skilltable)+`
+
+        `+inserttables(staff.skilltable,col)+`
         <tr style="background-color:white">
             <td colspan="3">Number of '&#10003' :</td>
-            <td class="tick">${skillcount.Material}</td>
-            <td class="tick">${skillcount.Testing}</td>
-            <td class="tick">${skillcount.Management}</td>
-            <td class="tick">${skillcount.Supervision}</td>
-            <td class="tick">${skillcount.Hand_On}</td>
-            <th colspan="2">Total : ${skillcount.Material+skillcount.Testing+skillcount.Management+skillcount.Supervision+skillcount.Hand_On}</th>
+            `+showscore(countskill(skilltoObj(col),staff.skilltable))+`
+            <th colspan="2">Total : `+totalsocre(countskill(skilltoObj(col),staff.skilltable))+`</th>
         </tr>
 
       </table>
-      <a href="../../">Return Home</a> 
+      <a href="../../">Return Home</a>
 </body>
-</html> 
+</html>
 
 `;
-
-/*
-        <tr></tr><tr>
-        <td rowspan="3+2" style="background-color:white">Site</td>  
-
-                <td rowspan="3" style="background-color:white">Demolition</td>
-
-                        <td>Scaffold</td>
-                        <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                        </tr><tr>
-
-                        <td>Demlish</td>
-                        <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                        </tr><tr>
-
-                        <td>Shoring</td>
-                        <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                        </tr><tr>
-
-                <td rowspan="2" style="background-color:white">Excavation</td>
-
-                        <td>Excavation</td>
-                        <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                        </tr><tr>
-
-                        <td>Backfilling</td>
-                        <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                        </tr><tr>
-
-        </tr>
-*/
   return html;
 };
-var inserttables = (datas) => {
+var inserttables = (datas,col) => {
     var html = '';
     for (locationdata = 0; locationdata < datas.length; locationdata++) {
         var rowspan = () => {
@@ -99,33 +86,37 @@ var inserttables = (datas) => {
         html = html + `
         <tr></tr><tr>
         <td rowspan="`+rowspan()+`" style="background-color:white;">${datas[locationdata].Location}</td>`+
-        inserttrades(datas[locationdata].trades)+`</tr>`;
+        inserttrades(datas[locationdata].trades,col)+`</tr>`;
     }
     return (html);
 };
-var inserttrades = (datas) => {
+var inserttrades = (datas,col) => {
     var html = '';
-    for (tradedata = 0; tradedata < datas.length; tradedata++) { 
+    for (tradedata = 0; tradedata < datas.length; tradedata++) {
         html = html + `
         <td rowspan="${datas[tradedata].specialities.length}" style="background-color:white">${datas[tradedata].Trade}</td>`+
-        insertspecialities(datas[tradedata].specialities);
+        insertspecialities(datas[tradedata].specialities,col);
     }
     return (html);
 };
-
-var insertspecialities = (datas) => {
+var colskillbox = (datas,skills) => {
+  html = "";
+  for (col = 0; col < skills.length; col++) {
+    html = html+`
+    <td class="tick">`+return_show(datas[specialitiesdata].skills[`${skills[col]}`])+`</td>
+    `;
+  }
+  return html;
+}
+var insertspecialities = (datas,col) => {
     var html = '';
-    for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) { 
+    for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) {
         html = html + `
         <td>${datas[specialitiesdata].Speciality}</td>
-        <td class="tick">`+return_show(datas[specialitiesdata].skills.Material)+`</td>
-        <td class="tick">`+return_show(datas[specialitiesdata].skills.Testing)+`</td>
-        <td class="tick">`+return_show(datas[specialitiesdata].skills.Management)+`</td>
-        <td class="tick">`+return_show(datas[specialitiesdata].skills.Supervision)+`</td>
-        <td class="tick">`+return_show(datas[specialitiesdata].skills.Hand_On)+`</td>
+        `+colskillbox(datas,col)+`
         <td>${datas[specialitiesdata].skills.From}</td>
         <td>${datas[specialitiesdata].skills.To}</td>
-        </tr><tr>`;            
+        </tr><tr>`;
     }
     return (html);
 };
@@ -141,10 +132,10 @@ var return_show = (data) =>{
 
 var countskill = (countskill,datas) => {
     for (locationdata = 0; locationdata < datas.length; locationdata++) {
-        for (tradedata = 0; tradedata < datas[locationdata].trades.length; tradedata++) { 
-            for (specialitiesdata = 0; specialitiesdata <  datas[locationdata].trades[tradedata].specialities.length; specialitiesdata++) { 
+        for (tradedata = 0; tradedata < datas[locationdata].trades.length; tradedata++) {
+            for (specialitiesdata = 0; specialitiesdata <  datas[locationdata].trades[tradedata].specialities.length; specialitiesdata++) {
                 for(var skills in datas[locationdata].trades[tradedata].specialities[specialitiesdata].skills){
-                    if(datas[locationdata].trades[tradedata].specialities[specialitiesdata].skills[skills]===true){  
+                    if(datas[locationdata].trades[tradedata].specialities[specialitiesdata].skills[skills]===true){
                         countskill[skills]++;
                     }
                 }

@@ -1,4 +1,9 @@
-const { buildSchema } = require('graphql');
+var setSchema = (col) => {
+	const { buildSchema } = require('graphql');
+	skills = ``;
+	for (c = 0; c < col.length; c++) {
+		skills = skills + `${col[c].replace(/\s+/g,'')}: Boolean\n`;
+	}
 var schema = buildSchema(`
 	schema {
 		query: Query
@@ -8,7 +13,7 @@ var schema = buildSchema(`
 		staff(id: String!): Staff
 		skill: [Staff]
 	}
-	
+
 	type Mutation{
 		addStaff(input:StaffInput): Staff
 	}
@@ -32,11 +37,7 @@ var schema = buildSchema(`
 		skills: SkillInput
 		}
 	input SkillInput{
-		Material: Boolean
-		Testing: Boolean
-		Management: Boolean
-		Supervision: Boolean
-		Hand_On: Boolean
+		${skills}
 		From: Int
 		To: Int
 	}
@@ -61,14 +62,12 @@ var schema = buildSchema(`
 		skills: Skill
 		}
 	type Skill{
-		Material: Boolean
-		Testing: Boolean
-		Management: Boolean
-		Supervision: Boolean
-		Hand_On: Boolean
+		${skills}
 		From: Int
 		To: Int
 	}
 `);
+return schema;
+}
 
-module.exports = schema;
+module.exports = setSchema;

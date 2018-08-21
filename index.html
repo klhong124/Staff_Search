@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Skill Table</title>
+<style>
+h1{
+    font-size: 50px;
+}
+form{
+    display: inline;
+}
+body{
+    padding-top: 300px;
+    width:100%;
+    text-align: center;
+}
+footer{
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+   text-align: center;
+}
+</style>
+</head>
+<body>
+    <h1>Staff Search</h1>
+    <form action="/search_staffid" method="POST">
+         Staff ID: <input type="text" name="staffid">
+        <input type="submit" value="ID Search">
+    </form>
+    <a href="/skill_search"><button>Skill Search</button></a>
+    <br><br>
+    <a href="/addStaff">Add Staff</a>
+    
+</body>
+<footer><a href="http://localhost:4000/graphql">Test Server</a></footer>
+</html> 

@@ -1,5 +1,4 @@
-var setQuery = (skills) => {
-
+var setQuery = (skill) => {
 var query = `
 {
   skill {
@@ -19,11 +18,7 @@ fragment fullskilltable on Location {
       specialities {
         Speciality
         skills {
-          `+skillrequest(skills,'Material')+`
-          `+skillrequest(skills,'Testing')+`
-          `+skillrequest(skills,'Management')+`
-          `+skillrequest(skills,'Supervision')+`
-          `+skillrequest(skills,'Hand_On')+`
+          `+skillrequest(skill)+`
           From
           To
        }
@@ -35,12 +30,13 @@ fragment fullskilltable on Location {
 `;
 return query;
 }
-var skillrequest = (skills,skill) => {
-  if(Boolean(Number(skills[skill]))){
-    return skill
-  }else{
-    return ``
+var skillrequest = (skills) => {
+  str = ``;
+  for(var skill in skills){
+    if(Boolean(Number(skills[skill]))){
+      str = `${str}\n   ${skill}`;
+    }
   }
+  return str;
 }
-
-  module.exports = setQuery;
+module.exports = setQuery;

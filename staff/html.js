@@ -2,31 +2,11 @@ const style = require('../style')
 var skilltoObj = (skills) => {
   obj = {};
   for (col = 0; col < skills.length; col++) {
-    obj[`${skills[col]}`] = 0;
+    obj[`${skills[col].replace(/\s+/g, '')}`] = 0;
   }
   return obj;
 }
-var colskill = (skills) => {
-  html = "";
-  for (col = 0; col < skills.length; col++) {
-    html = html+`<th class = "upright">${skills[col]}</th>`;
-  }
-  return html;
-}
-var showscore = (skillcount) => {
-  html = "";
-  for (var skill in skillcount){
-    html = html + `<td class="tick">${skillcount[skill]}</td>`;
-  }
-  return html;
-}
-var totalsocre = (skillcount) => {
-  socre = 0;
-  for (var skill in skillcount){
-    socre = socre + skillcount[skill];
-  }
-  return socre;
-}
+
 var setStaff = (staff,col) => {
 var html =`
 <!DOCTYPE html>
@@ -103,7 +83,7 @@ var colskillbox = (datas,skills) => {
   html = "";
   for (col = 0; col < skills.length; col++) {
     html = html+`
-    <td class="tick">`+return_show(datas[specialitiesdata].skills[`${skills[col]}`])+`</td>
+    <td class="tick">`+return_show(datas.skills[`${skills[col].replace(/\s+/g, '')}`])+`</td>
     `;
   }
   return html;
@@ -113,13 +93,37 @@ var insertspecialities = (datas,col) => {
     for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) {
         html = html + `
         <td>${datas[specialitiesdata].Speciality}</td>
-        `+colskillbox(datas,col)+`
+        `+colskillbox(datas[specialitiesdata],col)+`
         <td>${datas[specialitiesdata].skills.From}</td>
         <td>${datas[specialitiesdata].skills.To}</td>
         </tr><tr>`;
     }
     return (html);
 };
+
+var colskill = (skills) => {
+  html = "";
+  for (col = 0; col < skills.length; col++) {
+    html = html+`<th><span class = "upright">${skills[col]}</span></th>`;
+  }
+  return html;
+}
+
+var showscore = (skillcount) => {
+  html = "";
+  for (var skill in skillcount){
+    html = html + `<td class="tick">${skillcount[skill]}</td>`;
+  }
+  return html;
+}
+
+var totalsocre = (skillcount) => {
+  socre = 0;
+  for (var skill in skillcount){
+    socre = socre + skillcount[skill];
+  }
+  return socre;
+}
 
 var return_show = (data) =>{
     if (data){

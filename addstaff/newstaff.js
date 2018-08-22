@@ -1,59 +1,26 @@
-var setNewstaff = (datas) => {
+var setNewstaff = (datas,col) => {
     var newstaff = `
     {
         id: "${datas.staffid}",
         name: "${datas.name}",
         age: `+return_null(datas.age)+`,
         skilltable:[
-            `+locations(datas)+`
+            `+locations(datas,col)+`
         ]
     }
     `;
     return newstaff;
 }
-/* 
-    {
-      id: "TS00155", 
-      name: "Chan Ma Ma", 
-      age: 200, 
-      skilltable: 
-      [
-        {
-          Master: {id: "TS00155"}, 
-          Location: "Site Formation", 
-          trades: [
-            {
-              Trade: "Demolition", 
-              specialities: [
-                {
-                  Speciality: "Scaffold", 
-                  skills: {
-                    Material: false, 
-                    Testing: true,
-                    Management: false, 
-                    Supervision: true, 
-                    Hand_On: false
-                    From: 2018, 
-                    To: 2019
-                  }
-                },
-              ]
-            },
-          ]
-        },
-      ]
-    }
-*/
 
-var locations = (datas) => {
+var locations = (datas,col) => {
     var html ="";
     for(var locations in datas.skilltable){
         html = html + `
-        {	
+        {
             Master: {id: "${datas.staffid}"},
             Location: "${locations}",
             trades: [
-                `+trades(datas.skilltable[locations])+`
+                `+trades(datas.skilltable[locations],col)+`
             ]
         },
         `
@@ -61,14 +28,14 @@ var locations = (datas) => {
 return html;
 };
 
-var trades = (datas) => {
+var trades = (datas,col) => {
     var html = "";
     for(var trades in datas){
         html = html + `
         {
             Trade: "${trades}",
             specialities:[
-                `+specialities(datas[trades])+`
+                `+specialities(datas[trades],col)+`
             ]
         },
         `
@@ -76,20 +43,24 @@ var trades = (datas) => {
 return html;
 };
 
-var specialities = (datas) => {
+var colskill = (skills,datas) => {
+  str = "";
+  for (col = 0; col < skills.length; col++) {
+    str = str+`\t\t${skills[col].replace(/\s+/g, '')}: ${Boolean(Number(datas[skills[col]]))},\n`;
+  }
+  return str;
+}
+
+var specialities = (datas,col) => {
     var html = "";
     for(var specialities in datas){
         html = html + `
         {
             Speciality: "${specialities}",
-            skills:{ 
-                Material: `+Boolean(Number(datas[specialities].Material))+`,
-                Testing: `+Boolean(Number(datas[specialities].Testing))+`,
-                Management: `+Boolean(Number(datas[specialities].Management))+`,
-                Supervision: `+Boolean(Number(datas[specialities].Supervision))+`,
-                Hand_On: `+Boolean(Number(datas[specialities].Hand_On))+`,
-                From: `+return_null(datas[specialities].From)+`, 
-                To: `+return_null(datas[specialities].To)+` 
+            skills:{
+`+colskill(col,datas[specialities])+`
+                From: `+return_null(datas[specialities].From)+`,
+                To: `+return_null(datas[specialities].To)+`
             }
         },
         `

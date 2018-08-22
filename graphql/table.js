@@ -1,7 +1,16 @@
-var col = ["Material","Testing","Management","Supervision","Hand On"];
+var col = [
+    "Material",
+    "Testing",
+    "Management",
+    "Supervision",
+    "Hand On",
+    "New Skill"
+
+];
+
 var row =
 [
-    {
+  {
         Location:"Site Formation",
         trades:[
             {   Trade:"Demolition",

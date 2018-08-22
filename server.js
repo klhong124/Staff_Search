@@ -2,13 +2,12 @@ const express = require('express');
 const { graphql } = require('graphql');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
-//Test Server
-const testschema = require('./graphql/schema');
-const testroot = require('./graphql/resolver');
 const graphqlHTTP = require('express-graphql');
 const table = require('./graphql/table');
-const test = express();
+const schema = require('./graphql/schema');
+const root = require('./graphql/resolver');
 
+const test = express();
 const app = express();
 
 //Configuration
@@ -23,10 +22,7 @@ const app = express();
     var staffid = req.params.staffid;
     const staff = require('./staff/html');
     const query = require('./staff/query');
-    const root = require('./graphql/resolver');
-    const schema = require('./graphql/schema');
-    const table = require('./graphql/table');
-    console.log(schema(table.col));
+
   //Datafetching
   MongoClient.connect("mongodb://localhost:27017/",{ useNewUrlParser: true }, (err, db) => {
     //Create Collection
@@ -36,7 +32,6 @@ const app = express();
     //Collection Find
     db.db("Staffdb").collection("Staff").find({id: staffid}).toArray((err, database) => {
       graphql(schema(table.col), query(staffid,table.col), root(database)).then((response) => {
-        console.log(response);
         var result = response.data.staff
         if (result===null){
           res.send(`
@@ -56,14 +51,12 @@ const app = express();
 //Add Staff
   app.get('/addStaff', (req, res) => {
     const addstaff = require('./addstaff/html');
-    const table = require('./graphql/table');
     const html = addstaff(table)
     res.send(html);
   });
 //Skill Search
   app.get('/skill_search', (req, res) => {
     const skillsearch = require('./skillsearch/html');
-    const table = require('./graphql/table');
     const html = skillsearch(table)
     res.send(html);
   });
@@ -75,11 +68,8 @@ const app = express();
   app.post('/create_staff', (req, res) => {
     const newstaff = require('./addstaff/newstaff');
     const mutation = require('./addstaff/mutation');
-    const root = require('./graphql/resolver');
-    const schema = require('./graphql/schema');
-    const table = require('./graphql/table');
     //Collection InsertOne
-    graphql(schema(table.col),mutation(newstaff(req.body),table.col), root()).then((response) => {
+    graphql(schema(table.col),mutation(newstaff(req.body,table.col),table.col), root()).then((response) => {
       //DataBase Connect
         MongoClient.connect("mongodb://localhost:27017/",{ useNewUrlParser: true }, (err, db) => {
         //Create Collection
@@ -96,8 +86,6 @@ const app = express();
   app.post('/search_skill', (req,res) => {
     const skillsearch = require('./skillsearch/result');
     const query = require('./skillsearch/query');
-    const root = require('./graphql/resolver');
-    const schema = require('./graphql/schema');
     //Datafetching
     MongoClient.connect("mongodb://localhost:27017/",{ useNewUrlParser: true }, (err, db) => {
     //Create Collection
@@ -108,8 +96,8 @@ const app = express();
     db.db("Staffdb").collection("Staff").find().toArray((err, database) => {
       var skills = req.body.skills;
       var skilltable = req.body.skilltable;
-      var staff = [];
-      graphql(schema, query(skills), root(database)).then((response) => {
+      var allstaff = [];
+      graphql(schema(table.col), query(skills), root(database)).then((response) => {
         var result = response.data.skill;
         for(var i=0; i<result.length;i++){
           for (var location in skilltable){
@@ -126,9 +114,9 @@ const app = express();
             }
           }
           var jsonskilltable = JSON.stringify(skilltable)
-          staff.push({id:result[i].id, name:result[i].name, age:result[i].age,skilltable:jsonskilltable});
+          allstaff.push({id:result[i].id, name:result[i].name, age:result[i].age,skilltable:jsonskilltable});
         }
-        const html = skillsearch(staff,skills);
+        const html = skillsearch(allstaff,skills);
         res.send(html);
       });
       db.close();
@@ -140,8 +128,8 @@ const app = express();
 MongoClient.connect("mongodb://localhost:27017/",{ useNewUrlParser: true }, (err, db) => {
 db.db("Staffdb").collection("Staff").find().toArray((err, database) => {
   test.use('/graphql', graphqlHTTP({
-    schema: testschema(table.col),
-    rootValue: testroot(database),
+    schema: schema(table.col),
+    rootValue: root(database),
     graphiql: true,
   }));test.listen(4000);
   db.close();

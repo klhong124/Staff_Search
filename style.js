@@ -31,10 +31,9 @@ tr:nth-child(even) {
 }
 .upright {
     writing-mode: vertical-rl;
-    text-orientation: upright;
     height:90px;
     width:20px;
-    padding:20px
+    padding:5px
 }
 .tick{
     text-align: center;

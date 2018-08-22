@@ -3,7 +3,7 @@ var setTable = (table) => {
   var colskill = (skills) => {
     html = "";
     for (col = 0; col < skills.length; col++) {
-      html = html+`<th class = "upright">${skills[col]}</th>`;
+      html = html+`<th><span class = "upright">${skills[col]}</span></th>`;
     }
     return html;
   }
@@ -29,7 +29,7 @@ var setTable = (table) => {
               <th rowspan="2">Locations</th>
               <th rowspan="2">Trades</th>
               <th rowspan="2">Speciality</th>
-              <th colspan="${table.row.length}">Skill</th>
+              <th colspan="${table.col.length}">Skill</th>
               <th colspan="2">Year</th>
             </tr>
             <tr style="background-color:white">

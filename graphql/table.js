@@ -11,6 +11,24 @@ var col = [
 var row =
 [
       {
+          Location:"New Location",
+          trades:[
+              {   Trade:"New Trade",
+                  specialities:[
+                      { Speciality: "Speciality 1" },
+                      { Speciality: "Speciality 2" },
+                      { Speciality: "Speciality 3" },
+                      { Speciality: "Speciality 4" },
+                      ]
+              },{
+                  Trade:"New Trade 2",
+                  specialities:[
+                      { Speciality: "Speciality 5" },
+                      { Speciality: "Speciality 6" },
+                  ]
+              }
+          ]
+      },{
           Location:"Site Formation",
           trades:[
               {   Trade:"Demolition",

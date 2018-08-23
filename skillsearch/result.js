@@ -1,5 +1,5 @@
 const style = require('../style')
-var setTable = (allstaff,skills,heading) => {
+var setTable = (allstaff,skills) => {
     var html =`
     <!DOCTYPE html>
     <html>
@@ -11,7 +11,7 @@ var setTable = (allstaff,skills,heading) => {
     </head>
     <body>
         <h1>Staff Information</h1>
-        `+staffs(allstaff,skills,heading)+`
+        `+staffs(allstaff,skills)+`
         <a href="../../">Return Home</a>
     </body>
     </html>
@@ -20,7 +20,7 @@ var setTable = (allstaff,skills,heading) => {
     return html;
 };
 
-var staffs = (allstaff,scoretable,heading) => {
+var staffs = (allstaff,scoretable) => {
   var htmlarray = [];
   for(var i=0;i<allstaff.length;i++){
     var skillcolspan = 0;
@@ -47,7 +47,7 @@ var staffs = (allstaff,scoretable,heading) => {
         <th colspan="2">Year</th>
         </tr>
         <tr style="background-color:white">
-        `+colskill(heading)+`
+        `+colskill(scoretable)+`
         <th>From</th>
         <th style="padding: 0 16px">To</th>
         </tr>
@@ -72,8 +72,8 @@ var staffs = (allstaff,scoretable,heading) => {
 
 var colskill = (skills) => {
   html = "";
-  for (col = 0; col < skills.length; col++) {
-    html = html+`<th><span class = "upright">${skills[col]}</span></th>`;
+  for (var skill in skills) {
+    html = html+`<th><span class = "upright">${skill}</span></th>`;
   }
   return html;
 }
@@ -108,6 +108,16 @@ var inserttrades = (datas, skills) => {
     return (html);
 };
 var insertspecialities = (datas, skills) => {
+  var ifold = (from,to) => {
+      if(from === undefined){
+        var html = `<td colspan = "2" style="color:gray">(update required)</td>`;
+      }else{
+        var html = `
+        <td>${from}</td>
+        <td>${to}</td>
+        `;}
+      return html;
+  }
 
     var html = '';
     for (var specialities in datas) {
@@ -115,8 +125,7 @@ var insertspecialities = (datas, skills) => {
         <td>${specialities}</td>
         <td class="tick">${datas[specialities].weighting*100}%</td>
         `+showticks(datas[specialities].area,skills)+`
-        <td>${datas[specialities].area.From}</td>
-        <td>${datas[specialities].area.To}</td>
+        `+ifold(datas[specialities].area.From,datas[specialities].area.To)+`
         </tr><tr>`;
     }
     return (html);

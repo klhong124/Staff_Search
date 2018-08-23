@@ -136,7 +136,7 @@ const app = express();
           var jsonskilltable = JSON.stringify(skilltable)
           allstaff.push({id:result[i].id, name:result[i].name, age:result[i].age,skilltable:jsonskilltable});
         }
-        const html = skillsearch(allstaff,skills,table.col);
+        const html = skillsearch(allstaff,skills);
         res.send(html);
       });
       db.close();

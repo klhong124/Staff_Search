@@ -89,30 +89,23 @@ var colskillbox = (datas,skills) => {
   return html;
 }
 var insertspecialities = (datas,col) => {
-    var addtd = (col) => {
-      html = "";
-      for(i = 0;i<col.length;i++){
-        html = html + "<td> </td>";
-      }
-      return html
+    var ifold = (from,to) => {
+        if(from === undefined){
+          var html = `<td colspan = "2" style="color:gray">(update required)</td>`;
+        }else{
+          var html = `
+          <td>${from}</td>
+          <td>${to}</td>
+          `;}
+        return html;
     }
     var html = '';
     for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) {
-      try {
         html = html + `
         <td>${datas[specialitiesdata].Speciality}</td>
         `+colskillbox(datas[specialitiesdata],col)+`
-        <td>${datas[specialitiesdata].skills.From}</td>
-        <td>${datas[specialitiesdata].skills.To}</td>
+        `+ifold(datas[specialitiesdata].skills.From,datas[specialitiesdata].skills.To)+`
         </tr><tr>`;
-      } catch (e) {
-        html = html + `
-        <td>${datas[specialitiesdata].Speciality}</td>
-        `+addtd(col)+`
-        <td>${null}</td>
-        <td>${null}</td>
-        </tr><tr>`;
-      }
     }
     return (html);
 };

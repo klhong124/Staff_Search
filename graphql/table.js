@@ -1,45 +1,45 @@
+// NWC staff skill table
 var col = [
     "Material",
     "Testing",
     "Management",
     "Supervision",
     "Hand On",
-    "New Skill"
-
+    "New Skill",
 ];
 
 var row =
 [
-  {
-        Location:"Site Formation",
-        trades:[
-            {   Trade:"Demolition",
-                specialities:[
-                    { Speciality: "Scaffold" },
-                    { Speciality: "Demolish" },
-                    { Speciality: "Shoring" },
-                    { Speciality: "Plant Operation" },
-                    { Speciality: "Material Disposal" },
-                    { Speciality: "Safety Control" },
-                    { Speciality: "Environmental Contral" },
-                    { Speciality: "Utility Co-ordination" },
-                    ]
-            },{
-                Trade:"Excavation",
-                specialities:[
-                    { Speciality: "Excavating" },
-                    { Speciality: "Backfilling" },
-                    { Speciality: "Tree Felling" },
-                    { Speciality: "Slope Treatment" },
-                    { Speciality: "Plank Operation" },
-                    { Speciality: "Material Disposal" },
-                    { Speciality: "Safety Control" },
-                    { Speciality: "Environmental Contral" },
-                    { Speciality: "Utility Co-ordination" }
-                ]
-            }
-        ]
-    },{
+      {
+          Location:"Site Formation",
+          trades:[
+              {   Trade:"Demolition",
+                  specialities:[
+                      { Speciality: "Scaffold" },
+                      { Speciality: "Demolish" },
+                      { Speciality: "Shoring" },
+                      { Speciality: "Plant Operation" },
+                      { Speciality: "Material Disposal" },
+                      { Speciality: "Safety Control" },
+                      { Speciality: "Environmental Contral" },
+                      { Speciality: "Utility Co-ordination" },
+                      ]
+              },{
+                  Trade:"Excavation",
+                  specialities:[
+                      { Speciality: "Excavating" },
+                      { Speciality: "Backfilling" },
+                      { Speciality: "Tree Felling" },
+                      { Speciality: "Slope Treatment" },
+                      { Speciality: "Plank Operation" },
+                      { Speciality: "Material Disposal" },
+                      { Speciality: "Safety Control" },
+                      { Speciality: "Environmental Contral" },
+                      { Speciality: "Utility Co-ordination" }
+                  ]
+              }
+          ]
+      },{
         Location:"Preliminaries",
         trades:[
             {   Trade:"Plant & Equipment",
@@ -212,7 +212,7 @@ var row =
                     ]
             }
         ]
-    }
+    },
 ]
 module.exports.col = col;
 module.exports.row = row;

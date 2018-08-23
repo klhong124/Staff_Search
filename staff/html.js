@@ -82,21 +82,37 @@ var inserttrades = (datas,col) => {
 var colskillbox = (datas,skills) => {
   html = "";
   for (col = 0; col < skills.length; col++) {
-    html = html+`
-    <td class="tick">`+return_show(datas.skills[`${skills[col].replace(/\s+/g, '')}`])+`</td>
-    `;
+      html = html+`
+      <td class="tick">`+return_show(datas.skills[`${skills[col].replace(/\s+/g, '')}`])+`</td>
+      `;
   }
   return html;
 }
 var insertspecialities = (datas,col) => {
+    var addtd = (col) => {
+      html = "";
+      for(i = 0;i<col.length;i++){
+        html = html + "<td> </td>";
+      }
+      return html
+    }
     var html = '';
     for (specialitiesdata = 0; specialitiesdata < datas.length; specialitiesdata++) {
+      try {
         html = html + `
         <td>${datas[specialitiesdata].Speciality}</td>
         `+colskillbox(datas[specialitiesdata],col)+`
         <td>${datas[specialitiesdata].skills.From}</td>
         <td>${datas[specialitiesdata].skills.To}</td>
         </tr><tr>`;
+      } catch (e) {
+        html = html + `
+        <td>${datas[specialitiesdata].Speciality}</td>
+        `+addtd(col)+`
+        <td>${null}</td>
+        <td>${null}</td>
+        </tr><tr>`;
+      }
     }
     return (html);
 };

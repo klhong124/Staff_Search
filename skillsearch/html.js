@@ -122,7 +122,7 @@ var insertspecialities = (datas,L,T) => {
                     input.disabled = true
                 }"
         ></td>
-        <td class="weighting"><input style="border:none;background: transparent;text-align: center;" id="${inputid}" type="number" size=5 value=1 name="skilltable[${L}][${T}][${S}][weighting]" disabled></td>
+        <td class="weighting"><input style="border:none;background: transparent;text-align: center;" id="${inputid}" type="float" size=5 value=1.0 name="skilltable[${L}][${T}][${S}][weighting]" disabled></td>
 
         </tr><tr>`;
     }

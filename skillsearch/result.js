@@ -1,5 +1,5 @@
 const style = require('../style')
-var setTable = (allstaff,skills) => {
+var setTable = (allstaff,skills,heading) => {
     var html =`
     <!DOCTYPE html>
     <html>
@@ -11,7 +11,7 @@ var setTable = (allstaff,skills) => {
     </head>
     <body>
         <h1>Staff Information</h1>
-        `+staffs(allstaff,skills)+`
+        `+staffs(allstaff,skills,heading)+`
         <a href="../../">Return Home</a>
     </body>
     </html>
@@ -20,7 +20,7 @@ var setTable = (allstaff,skills) => {
     return html;
 };
 
-var staffs = (allstaff,scoretable) => {
+var staffs = (allstaff,scoretable,heading) => {
   var htmlarray = [];
   for(var i=0;i<allstaff.length;i++){
     var skillcolspan = 0;
@@ -47,7 +47,7 @@ var staffs = (allstaff,scoretable) => {
         <th colspan="2">Year</th>
         </tr>
         <tr style="background-color:white">
-        `+colskill(scoretable)+`
+        `+colskill(heading)+`
         <th>From</th>
         <th style="padding: 0 16px">To</th>
         </tr>
@@ -72,8 +72,8 @@ var staffs = (allstaff,scoretable) => {
 
 var colskill = (skills) => {
   html = "";
-  for (var skill in skills) {
-    html = html+`<th><span class = "upright">${skill}</span></th>`;
+  for (col = 0; col < skills.length; col++) {
+    html = html+`<th><span class = "upright">${skills[col]}</span></th>`;
   }
   return html;
 }
@@ -113,7 +113,7 @@ var insertspecialities = (datas, skills) => {
     for (var specialities in datas) {
         html = html + `
         <td>${specialities}</td>
-        <td class="tick">${datas[specialities].weighting}x</td>
+        <td class="tick">${datas[specialities].weighting*100}%</td>
         `+showticks(datas[specialities].area,skills)+`
         <td>${datas[specialities].area.From}</td>
         <td>${datas[specialities].area.To}</td>

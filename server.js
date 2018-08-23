@@ -22,7 +22,6 @@ const app = express();
     var staffid = req.params.staffid;
     const staff = require('./staff/html');
     const query = require('./staff/query');
-
   //Datafetching
   MongoClient.connect("mongodb://localhost:27017/",{ useNewUrlParser: true }, (err, db) => {
     //Create Collection
@@ -40,8 +39,26 @@ const app = express();
             window.location.replace("/");
           </script>`);
         }else{
-          const html = staff(result,table.col);
-          res.send(html);
+
+          for (locationdata = 0; locationdata < table.row.length; locationdata++) {
+              for (tradedata = 0; tradedata < table.row[locationdata].trades.length; tradedata++) {
+                  for (specialitiesdata = 0; specialitiesdata <  table.row[locationdata].trades[tradedata].specialities.length; specialitiesdata++) {
+                    table.row[locationdata].trades[tradedata].specialities[specialitiesdata].skills = {e:1}
+                    try{
+                    table.row[locationdata].trades[tradedata].specialities[specialitiesdata].skills = result.skilltable.filter(data => {
+                      return data.Location === table.row[locationdata].Location
+                    })[0].trades.filter(data => {
+                      return data.Trade === table.row[locationdata].trades[tradedata].Trade
+                    })[0].specialities.filter(data => {
+                      return data.Speciality === table.row[locationdata].trades[tradedata].specialities[specialitiesdata].Speciality
+                    })[0].skills;
+                    }catch(err){}
+                  }
+              }
+          }
+          var staffresult = {id:result.id, name:result.name, age:result.age, skilltable:table.row}
+          const html = staff(staffresult,table.col);
+          res.send (html);
         };
         db.close();
         });
@@ -103,20 +120,23 @@ const app = express();
           for (var location in skilltable){
             for (var trade in skilltable[location]){
               for (var speciality in skilltable[location][trade]){
-                skilltable[location][trade][speciality].area = result[i].skilltable.filter(data => {
-                  return data.Location === location
-                })[0].trades.filter(data => {
-                  return data.Trade === trade
-                })[0].specialities.filter(data => {
-                  return data.Speciality === speciality
-                })[0].skills;
+                try {
+                  skilltable[location][trade][speciality].area = result[i].skilltable.filter(data => {
+                    return data.Location === location
+                  })[0].trades.filter(data => {
+                    return data.Trade === trade
+                  })[0].specialities.filter(data => {
+                    return data.Speciality === speciality
+                  })[0].skills;
+                } catch (e) {
+                }
               }
             }
           }
           var jsonskilltable = JSON.stringify(skilltable)
           allstaff.push({id:result[i].id, name:result[i].name, age:result[i].age,skilltable:jsonskilltable});
         }
-        const html = skillsearch(allstaff,skills);
+        const html = skillsearch(allstaff,skills,table.col);
         res.send(html);
       });
       db.close();

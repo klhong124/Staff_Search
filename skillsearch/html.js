@@ -2,7 +2,7 @@ const style = require('../style')
 var skill_selection = (skills) => {
   html = "";
   for (col = 0; col < skills.length; col++) {
-    html = html+`<input type="checkbox" value=1 name="[skills][${skills[col].replace(/\s+/g, '')}]" checked>${skills[col]}
+    html = html+`<label class="btn btn-default">${skills[col]}<input class="badgebox" type="checkbox" value=1 name="[skills][${skills[col].replace(/\s+/g, '')}]" checked><span class="badge">&check;</span></label>
 `;
   }
   return html;
@@ -13,19 +13,43 @@ var setTable = (table) => {
     <html>
     <head>
     <title>Skill Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
+    .badgebox{
+        opacity: 0;
+    }
+    .badgebox + .badge{
+        text-indent: -999999px;
+        width: 25px;
+    }
+    .badgebox:focus + .badge{
+        box-shadow: inset 0px 0px 1px;
+    }
+    .badgebox:checked + .badge{
+    	text-indent: 0;
+    }
     ${style}
+    .checkmask{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: transparent;
+    }
     </style>
     </head>
-
     <body>
+    <div class="container">
     <h1>Find Best Staff</h1>
+    <hr>
     <form action="/search_skill" method="POST">
-        <div class="skill_selection">
             `+skill_selection(table.col)+`
-        </div><br>
-        <table>
-            <tr>
+            <br><br>
+        <table class="table">
+            <tr style="background-color:white;">
               <th>Locations</th>
               <th>Trades</th>
               <th>Speciality</th>
@@ -34,9 +58,16 @@ var setTable = (table) => {
             </tr>
             `+inserttables(table.row)+`
           </table><br>
-        <input type="submit" value="Find Best Staff">
-    </form><hr>
-    <a href="../../">Return Home</a>
+          <div style="width:100%;text-align: center;">
+            <input type="submit" class="submitbutton" value="Find Best Staff">
+          </div>
+          <hr>
+          <ul class="pager">
+            <li><a href="../../">Return Home</a></li>
+            <li><a href="#" class="editbutton">Edit</a></li>
+            <li><a href="#" class="delbutton">Delete</a></li>
+          </ul>
+    </form>
     </body>
     </html>
     `
@@ -55,20 +86,18 @@ var inserttables = (datas) => {
         var toclickclass = datas[locationdata].Location.replace(/\s+/g, '');
         html = html + `
         <tr></tr><tr>
-        <td rowspan="`+rowspan()+`" style="background-color:white;">${datas[locationdata].Location}
+        <td rowspan="`+rowspan()+`" style="background-color:white;" class="tickcontainer">${datas[locationdata].Location}
+        <label>
         <input type="checkbox"
             onclick = "
                 var _checkboxs = document.getElementsByClassName('${toclickclass}');
                 for (_checkbox = 0; _checkbox < _checkboxs.length; _checkbox++) {
-                    if (this.checked){
                         _checkboxs[_checkbox].checked = false;
                         _checkboxs[_checkbox].click();
-                    }else{
-                        _checkboxs[_checkbox].checked = true;
-                        _checkboxs[_checkbox].click();
-                    }
                 }"
         >
+        <span class="checkmark" style="opacity: 0;"></span>
+        </label>
         </td>`+
         inserttrades(datas[locationdata].trades,datas[locationdata].Location)+`</tr>`;
     }
@@ -80,7 +109,8 @@ var inserttrades = (datas,L) => {
         var toclickclass = `${L}_${datas[tradedata].Trade}`.replace(/\s+/g, '');
         var checkboxclass = `${L}`.replace(/\s+/g, '');
         html = html + `
-        <td rowspan="${datas[tradedata].specialities.length}" style="background-color:white">${datas[tradedata].Trade}
+        <td rowspan="${datas[tradedata].specialities.length}" style="background-color:white" class="tickcontainer">${datas[tradedata].Trade}
+        <label style="opacity: 0;">
         <input type="checkbox"
             class = "${checkboxclass}"
             onclick = "
@@ -95,6 +125,8 @@ var inserttrades = (datas,L) => {
                     }
                 }"
         >
+        <span class="checkmark"></span>
+        </label>
         </td>`+
         insertspecialities(datas[tradedata].specialities,L,datas[tradedata].Trade);
     }
@@ -108,9 +140,11 @@ var insertspecialities = (datas,L,T) => {
         var inputid = `${L}_${T}_${S}`.replace(/\s+/g, '');
         var checkboxclass = `${L}_${T}`.replace(/\s+/g, '');
         html = html + `
-        <td>${S}</td>
-        <td class="tick">
+        <td class="tickcontainer">${S}<span class="checkmask" onclick="document.getElementById('_${inputid}').click()"></span></td>
+        <td class="tickcontainer">
+        <label>
         <input type="checkbox"
+            id = "_${inputid}"
             class = "${checkboxclass}"
             value="&#10003;"
             name="skilltable[${L}][${T}][${S}][area]"
@@ -121,8 +155,11 @@ var insertspecialities = (datas,L,T) => {
                 }else{
                     input.disabled = true
                 }"
-        ></td>
-        <td class="weighting"><input style="border:none;background: transparent;text-align: center;" id="${inputid}" type="float" size=5 value=1.0 name="skilltable[${L}][${T}][${S}][weighting]" disabled></td>
+        >
+        <span class="checkmark"></span>
+        </label>
+        </td>
+        <td class="weighting"><input class="textinput" id="${inputid}" type="float" size=5 value=1.0 name="skilltable[${L}][${T}][${S}][weighting]" disabled></td>
 
         </tr><tr>`;
     }

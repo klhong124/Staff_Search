@@ -5,14 +5,22 @@ var setTable = (allstaff,skills) => {
     <html>
     <head>
     <title>Best Staff</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         ${style}
     </style>
     </head>
     <body>
-        <h1>Staff Information</h1>
+    <div class="container">
+        <h1>Staff Information</h1><hr>
         `+staffs(allstaff,skills)+`
-        <a href="../../">Return Home</a>
+        <ul class="pager">
+          <li><a href="../skill_search">Previous</a></li>
+          <li><a href="../../">Return Home</a></li>
+        </ul>
+    </div>
     </body>
     </html>
 
@@ -32,13 +40,12 @@ var staffs = (allstaff,scoretable) => {
         totalscore = totalscore + scoretable[skill];
     }
     htmlarray.push({html:`
-    <div class="staffinfo">
         <p>Staff ID : ${allstaff[i].id}</p>
         <p>Name : ${allstaff[i].name}</p>
         <p>Age : ${allstaff[i].age}</p>
     </div><br>
-    <table>
-        <tr>
+    <table class="table">
+        <tr style="background-color:white;">
         <th rowspan="2">Locations</th>
         <th rowspan="2">Trades</th>
         <th rowspan="2">Speciality</th>
@@ -49,15 +56,15 @@ var staffs = (allstaff,scoretable) => {
         <tr style="background-color:white">
         `+colskill(scoretable)+`
         <th>From</th>
-        <th style="padding: 0 16px">To</th>
+        <th>To</th>
         </tr>
 
         `+inserttables(skilltable, scoretable)+`
-        <tr style="background-color:white">
-        <td colspan="4"><b>Total :</b></td>
+        <tr style="background-color:white;">
+        <td colspan="4" style="vertical-align: middle;"><b>Total :</b></td>
         `+showscore(scoretable)+`
-        <td style="border-right:0px">Score : </td>
-        <td style="border-left:0px;font-size: 30px;"><b>${totalscore}</b></td>
+        <td style="border-right:0px!important;vertical-align: middle">Score : </td>
+        <td style="border-left:0px!important;font-size: 35px;"><b>${totalscore}</b></td>
         </tr>
 
     </table><br><hr><br>`,score:totalscore});
@@ -65,7 +72,10 @@ var staffs = (allstaff,scoretable) => {
     var html = ""
     htmlarray.sort(function(a,b) {return (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0);} )
     for (var i=0;i<htmlarray.length;i++){
-        html = html + htmlarray[i].html;
+        html = html + `
+        <div class="staffinfo well-lg">
+            <p style="font-size: 30px;float:right;margin-right:30px"># ${i+1}</p>
+        ` + htmlarray[i].html;
     }
     return (html);
 };
@@ -134,7 +144,7 @@ var insertspecialities = (datas, skills) => {
 var showscore = (skills) => {
   html = "";
   for (var socre in skills) {
-    html = html+`<td class="tick">${skills[socre]}</td>`;
+    html = html+`<td class="tick"style="vertical-align: middle;"><b>${skills[socre]}</b></td>`;
   }
   return html;
 }

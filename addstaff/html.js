@@ -12,20 +12,40 @@ var setTable = (table) => {
     <html>
     <head>
     <title>Add New Staff</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         ${style}
     </style>
     </head>
     <body>
-        <h1>Staff Information</h1>
-        <form action="/create_staff" method="POST">
-        <div class="staffinfo">
-            <p>Staff ID : <input type="text" name="staffid"></p>
-            <p>Name : <input type="text" name="name"></p>
-            <p>Age : <input type="text" name="age"></p>
-        </div><br>
-        <table>
-            <tr>
+    <div class="container">
+      <h1>Staff Information</h1>
+      <hr>
+    <form class="form-horizontal" action="/create_staff" method="POST">
+      <div class="staffinfo  well-lg">
+        <div class="form-group">
+          <label class="control-label col-sm-1" for="staffid">Staff ID:</label>
+          <div class="col-sm-3">
+            <input type="email" class="form-control" id="staffid" placeholder="Enter staff ID" name="staffid">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-1" for="name">Name:</label>
+          <div class="col-sm-3">
+            <input type="password" class="form-control" id="name" placeholder="Enter name" name="name">
+          </div>
+        </div>
+            <div class="form-group">
+          <label class="control-label col-sm-1" for="age">Age:</label>
+          <div class="col-sm-3">
+            <input type="password" class="form-control" id="age" placeholder="Enter age" name="age">
+          </div>
+        </div>
+    </div><br>
+    <table class="table">
+        <tr style="background-color:white">
               <th rowspan="2">Locations</th>
               <th rowspan="2">Trades</th>
               <th rowspan="2">Speciality</th>
@@ -35,44 +55,24 @@ var setTable = (table) => {
             <tr style="background-color:white">
               `+colskill(table.col)+`
               <th>From</th>
-              <th style="padding: 0 16px">To</th>
+              <th>To</th>
             </tr>
             `+inserttables(table.row,table.col)+`
           </table><br>
-          <input type="submit" value="Add Staff">
-          </form><hr>
-          <a href="../../">Return Home</a>
+          <div style="width:100%;text-align: center;">
+            <input type="submit" class="submitbutton" value="Add Staff">
+          </div>
+          <hr>
+          <ul class="pager">
+            <li><a href="../skill_search">Previous</a></li>
+            <li><a href="../../">Return Home</a></li>
+          </ul>
+    </form>
+    </div>
     </body>
     </html>
     `;
 
-    /*      //Location
-            <tr></tr><tr>
-            <td rowspan="2+1" style="background-color:white">Site</td>
-
-                    //Trades
-                    <td rowspan="2" style="background-color:white">Demolition</td>
-
-                            //Speciality
-                            <td>Scaffold</td>
-                            <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                            </tr><tr>
-
-                            //Speciality
-                            <td>Demlish</td>
-                            <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                            </tr><tr>
-
-
-                    //Trades
-                    <td rowspan="1" style="background-color:white">Excavation</td>
-
-                            <td>Excavation</td>
-                            <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>
-                            </tr><tr>
-
-            </tr>  //Location-End
-    */
     return html;
     };
     var inserttables = (datas,col) => {
@@ -105,8 +105,12 @@ var setTable = (table) => {
       html = "";
       for (col = 0; col < skills.length; col++) {
         html = html+`
-        <td class="tick">
-        <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][${skills[col]}]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"></td>
+        <td class="tickcontainer">
+        <label>
+          <input type="hidden" value=0 name="skilltable[${L}][${T}][${S}][${skills[col]}]"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value">
+          <span class="checkmark"></span>
+        <label>
+        </td>
         `;
       }
       return html;
@@ -118,8 +122,8 @@ var setTable = (table) => {
             html = html + `
             <td>${S}</td>
             `+colskillbox(L,T,S,col)+`
-            <td class="tick"><input type="text" name="skilltable[${L}][${T}][${S}][From]" size="4"></td>
-            <td class="tick"><input type="text" name="skilltable[${L}][${T}][${S}][To]" size="4"></td>
+            <td class="tick"><input class="textinput" type="text" name="skilltable[${L}][${T}][${S}][From]" size="4" placeholder="From"></td>
+            <td class="tick"><input class="textinput" type="text" name="skilltable[${L}][${T}][${S}][To]" size="4" placeholder="To"></td>
             </tr><tr>`;
         }
         return (html);

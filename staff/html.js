@@ -13,19 +13,24 @@ var html =`
 <html>
 <head>
 <title>Skill Table - ${staff.id}</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
     ${style}
 </style>
 </head>
 <body>
+<div class="container">
     <h1>Staff Information</h1>
+    <hr>
     <div class="staffinfo">
         <p>Staff ID : ${staff.id}</p>
         <p>Name : ${staff.name}</p>
         <p>Age : ${staff.age}</p>
     </div><br>
-    <table>
-        <tr>
+    <table class="table">
+        <tr style="background-color:white">
           <th rowspan="2">Locations</th>
           <th rowspan="2">Trades</th>
           <th rowspan="2">Speciality</th>
@@ -35,7 +40,7 @@ var html =`
         <tr style="background-color:white">
           `+colskill(col)+`
           <th>From</th>
-          <th style="padding: 0 16px">To</th>
+          <th>To</th>
         </tr>
 
         `+inserttables(staff.skilltable,col)+`
@@ -44,9 +49,13 @@ var html =`
             `+showscore(countskill(skilltoObj(col),staff.skilltable))+`
             <th colspan="2">Total : `+totalsocre(countskill(skilltoObj(col),staff.skilltable))+`</th>
         </tr>
-
-      </table>
-      <a href="../../">Return Home</a>
+      </table><hr>
+      <ul class="pager">
+        <li><a href="../../">Return Home</a></li>
+        <li><a href="#" class="editbutton">Edit</a></li>
+        <li><a href="#" class="delbutton">Delete</a></li>
+      </ul>
+</div>
 </body>
 </html>
 

@@ -70,6 +70,7 @@ var setTable = (table) => {
     </form>
     </body>
     </html>
+    <script>
     `
     return html;
 }

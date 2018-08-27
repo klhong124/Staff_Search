@@ -24,7 +24,7 @@ var html =`
 <div class="container">
     <h1>Staff Information</h1>
     <hr>
-    <div class="staffinfo">
+    <div class="staffinfo well-lg">
         <p>Staff ID : ${staff.id}</p>
         <p>Name : ${staff.name}</p>
         <p>Age : ${staff.age}</p>
@@ -53,7 +53,7 @@ var html =`
       <ul class="pager">
         <li><a href="../../">Return Home</a></li>
         <li><a href="#" class="editbutton">Edit</a></li>
-        <li><a href="#" class="delbutton">Delete</a></li>
+        <li><a href="../../delete/${staff.id}" class="delbutton">Delete</a></li>
       </ul>
 </div>
 </body>

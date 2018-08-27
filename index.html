@@ -2,7 +2,32 @@
 <html>
 <head>
 <title>Skill Table</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
+.skillsearchbutton{
+  border-radius: 25px;
+  border: 2px solid #53A271;
+  background-color: white;
+  color: #53A271;
+  padding: 5px 25px;
+}
+.skillsearchbutton:hover{
+  background-color:#53A271;
+  color: white;
+}
+.addstaffbutton{
+  border-radius: 25px;
+  border: 2px solid #CD7676;
+  background-color: white;
+  color: #CD7676;
+  padding: 5px 25px;
+}
+.addstaffbutton:hover{
+  background-color:#CD7676;
+  color: white;
+}
 h1{
     font-size: 50px;
 }
@@ -20,18 +45,35 @@ footer{
    width: 100%;
    text-align: center;
 }
+.stylish-input-group .input-group-addon{
+    background: white !important;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
 </style>
 </head>
 <body>
+  <container>
     <h1>Staff Search</h1>
-    <form action="/search_staffid" method="POST">
-         Staff ID: <input type="text" name="staffid">
-        <input type="submit" value="ID Search">
-    </form>
-    <a href="/skill_search"><button>Skill Search</button></a>
-    <br><br>
-    <a href="/addStaff">Add Staff</a>
-    
+    <form action="/search_staffid" method="POST" class="row">
+          <div class="col-sm-4 col-sm-offset-4">
+              <div id="imaginary_container">
+                  <div class="input-group stylish-input-group">
+                      <input type="text" class="form-control"  placeholder="ID Search" name="staffid">
+                      <span class="input-group-addon">
+                          <button type="submit">
+                              <span class="glyphicon glyphicon-search"></span>
+                          </button>
+                      </span>
+                  </div>
+              </div>
+  	</div>
+    </form><br>
+    <a href="/skill_search"><button class="skillsearchbutton">Skill Search</button></a>
+    <a href="/addStaff"><button class="addstaffbutton">Add Staff</button></a>
+  </container>
 </body>
 <footer><a href="http://localhost:4000/graphql">Test Server</a></footer>
-</html> 
+</html>

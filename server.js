@@ -71,6 +71,21 @@ const app = express();
     const html = addstaff(table)
     res.send(html);
   });
+//Del Staff
+  app.get('/delete/:staffid', (req, res) => {
+    var staffid = req.params.staffid;
+    MongoClient.connect("mongodb://localhost:27017/",{ useNewUrlParser: true }, (err, db) => {
+        db.db("Staffdb").collection("Staff").deleteOne({id: staffid}, function(err, obj) {
+          db.close();
+          res.send(`
+          <script>
+            alert("StaffID(${staffid}) was been deleted.");
+            window.location.replace("/");
+          </script>`);
+        });
+    });
+
+  });
 //Skill Search
   app.get('/skill_search', (req, res) => {
     const skillsearch = require('./skillsearch/html');

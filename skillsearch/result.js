@@ -42,6 +42,7 @@ var staffs = (allstaff,scoretable) => {
     htmlarray.push({html:`
         <p>Staff ID : ${allstaff[i].id}</p>
         <p>Name : ${allstaff[i].name}</p>
+        <p style="float:right;margin-right:30px"><a href="../staff/${allstaff[i].id}" target="_blank">View Staff</a></p>
         <p>Age : ${allstaff[i].age}</p>
     </div><br>
     <table class="table">
@@ -64,7 +65,7 @@ var staffs = (allstaff,scoretable) => {
         <td colspan="4" style="vertical-align: middle;"><b>Total :</b></td>
         `+showscore(scoretable)+`
         <td style="border-right:0px!important;vertical-align: middle">Score : </td>
-        <td style="border-left:0px!important;font-size: 35px;"><b>${totalscore}</b></td>
+        <td style="border-left:0px!important;font-size: 35px;"><b>${totalscore.toFixed(1)}</b></td>
         </tr>
 
     </table><br><hr><br>`,score:totalscore});
@@ -131,9 +132,10 @@ var insertspecialities = (datas, skills) => {
 
     var html = '';
     for (var specialities in datas) {
+        var weighting = datas[specialities].weighting*100
         html = html + `
         <td>${specialities}</td>
-        <td class="tick">${datas[specialities].weighting*100}%</td>
+        <td class="tick">${weighting.toFixed(0)}%</td>
         `+showticks(datas[specialities].area,skills)+`
         `+ifold(datas[specialities].area.From,datas[specialities].area.To)+`
         </tr><tr>`;

@@ -28,19 +28,19 @@ var setTable = (table) => {
         <div class="form-group">
           <label class="control-label col-sm-1" for="staffid">Staff ID:</label>
           <div class="col-sm-3">
-            <input type="email" class="form-control" id="staffid" placeholder="Enter staff ID" name="staffid">
+            <input type="text" class="form-control" id="staffid" placeholder="Enter staff ID" name="staffid">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-1" for="name">Name:</label>
           <div class="col-sm-3">
-            <input type="password" class="form-control" id="name" placeholder="Enter name" name="name">
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
           </div>
         </div>
             <div class="form-group">
           <label class="control-label col-sm-1" for="age">Age:</label>
           <div class="col-sm-3">
-            <input type="password" class="form-control" id="age" placeholder="Enter age" name="age">
+            <input type="text" class="form-control" id="age" placeholder="Enter age" name="age">
           </div>
         </div>
     </div><br>

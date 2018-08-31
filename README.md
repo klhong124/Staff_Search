@@ -6,4 +6,5 @@
 * Install MongoDB and use default seting
 * Download all file exclude `.git`
 * Type `npm start` to start the server
+
 Version 1.0 - Copyright© Ryan Kwan . klhong124@gmail.com
